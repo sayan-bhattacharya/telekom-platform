@@ -2,7 +2,7 @@ import OpenAI from 'openai';
 
 // Initialize OpenAI with your API key
 const openai = new OpenAI({
-    apiKey: "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",
+    apiKey: 1,
 });
 
 // Function to fetch token data from CoinGecko API by contract address

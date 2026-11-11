@@ -1,108 +1,97 @@
+# Student & Recruiter Talent Match Platform
 
-#Student Platform
+<div align="center">
 
-This project is a web platform that allows students to sign up, apply for jobs, and submit application forms with videos and cover letters. Recruiters can log in to review applications and rank candidates based on skills and job description relevance.
+[![React](https://img.shields.io/badge/Frontend-React_18-61DAFB?style=for-the-badge&logo=react&logoColor=black)](frontend/)
+[![Node.js](https://img.shields.io/badge/Backend-Node.js_/_Express-339933?style=for-the-badge&logo=node.js&logoColor=white)](backend/)
+[![MongoDB](https://img.shields.io/badge/Database-MongoDB_Atlas-47A248?style=for-the-badge&logo=mongodb&logoColor=white)]()
+[![JWT](https://img.shields.io/badge/Security-JWT_Auth-black?style=for-the-badge&logo=json-web-tokens&logoColor=white)]()
 
-Table of Contents
+**A dual-sided web platform enabling student video resumes, skill profiling, and recruiter candidate ranking.**
 
-	•	Features
-	•	Technologies Used
-	•	Setup and Installation
-	•	Running the Project
-	•	Troubleshooting
+</div>
 
-Features
+---
 
-	•	Student & Recruiter Roles: Separate login and signup functionality for students and recruiters.
-	•	Application Form: Students can upload a video, cover letter, and CV, with optional fields for disabilities.
-	•	Ranking System: Applications can be ranked by recruiters based on candidate fit for roles.
-	•	MongoDB Integration: Application and user data are stored in MongoDB Atlas.
+## 📌 System Overview
 
-Technologies Used
+This application bridges student researchers and academic/industry recruiters. Students submit structured application packages containing video resumes, cover letters, and transcripts, while recruiters evaluate candidates using automated skill-match scoring and ranking tools.
 
-	•	Frontend: React, Tailwind CSS, React Router
-	•	Backend: Node.js, Express, MongoDB
-	•	Authentication: JWT (JSON Web Token)
-	•	Database: MongoDB Atlas (Mongoose ORM)
-	•	File Uploads: multer middleware
-	•	Password Hashing: bcryptjs
+---
 
-Setup and Installation
+## 🔄 Dual-Portal Workflow & Architecture
 
-Prerequisites
+```mermaid
+graph TD
+    classDef student fill:#eff6ff,stroke:#1e40af,stroke-width:2px;
+    classDef server fill:#f0fdf4,stroke:#15803d,stroke-width:2px;
+    classDef recruiter fill:#fefce8,stroke:#a16207,stroke-width:2px;
+    classDef db fill:#fdf2f8,stroke:#be185d,stroke-width:2px;
 
-	•	Node.js (version 18 or above recommended)
-	•	MongoDB Atlas Account
-	•	Visual Studio Code (or your preferred editor)
+    subgraph StudentPortal ["🎓 Student Experience"]
+        S_Register[Sign Up & Authentication] --> S_Profile[Profile & Video Resume Upload]
+        S_Profile --> S_Apply[Job & Research Topic Application]
+    end
 
-Clone Repository
+    subgraph CoreBackend ["⚙️ Express.js & Media Gateway"]
+        AuthMid[JWT Auth Middleware]
+        MulterPipe[Multer Media & Document Pipeline]
+        RankEngine[Candidate Matching & Ranking Algorithm]
+    end
 
-git clone <your-repository-url>
-cd student-platform
+    subgraph DataStore ["💾 Storage & Persistence"]
+        Mongo[(MongoDB Atlas Database)]
+    end
 
-Environment Variables
+    subgraph RecruiterPortal ["🏢 Recruiter Experience"]
+        R_Login[Recruiter Authentication] --> R_Dash[Applicant Review Dashboard]
+        R_Dash --> R_Eval[Video Playback & Candidate Scoring]
+    end
 
-Create a .env file in the root directory of the backend folder with the following:
+    S_Register & S_Apply --> AuthMid
+    S_Profile --> MulterPipe --> Mongo
+    Mongo --> RankEngine --> R_Dash
 
-MONGODB_URI=<your-mongodb-uri>
-JWT_SECRET=<your-jwt-secret>
-PORT=5001
+    class S_Register,S_Profile,S_Apply student;
+    class AuthMid,MulterPipe,RankEngine server;
+    class R_Login,R_Dash,R_Eval recruiter;
+    class Mongo db;
+```
 
-Install Dependencies
+---
 
-	1.	Backend:
+## 🚀 Setup & Local Execution
 
+### Prerequisites
+- Node.js (v18+)
+- MongoDB Atlas account (or local MongoDB instance)
+
+### Backend Configuration
+```bash
 cd backend
 npm install
 
+# Create .env file
+# MONGODB_URI=your_mongodb_uri
+# JWT_SECRET=your_jwt_secret
+# PORT=5001
 
-	2.	Frontend:
+npm start
+```
 
+### Frontend Configuration
+```bash
 cd ../frontend
 npm install
-
-
-
-Initialize Sample Data
-
-After setting up MongoDB and environment variables, insert sample data for testing:
-
-// In server.js, within `startServer`:
-await insertSampleData(); // Ensure this line exists to insert data for testing
-
-Running the Project
-
-	1.	Start Backend Server:
-
-cd backend
 npm start
+```
 
+The frontend will run at `http://localhost:3000` and communicate with the backend at `http://localhost:5001`.
 
-	2.	Start Frontend Development Server:
+---
 
-cd ../frontend
-npm start
+## 📬 Contact
 
-
-
-Visit http://localhost:3000 for the frontend and http://localhost:5001 for the backend API.
-
-Troubleshooting
-
-Common Issues
-
-	•	nvm Not Recognized:
-Ensure nvm is installed and initialized by adding the following lines to ~/.zshrc or ~/.bashrc:
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
-
-	•	MongoDB Atlas SSL Error:
-Confirm ssl: true, sslValidate: false in mongoose.connect options if SSL issues persist.
-	•	bcrypt Password Comparison Issues:
-Use bcryptjs consistently for hashing and comparison. Ensure bcrypt is fully uninstalled to avoid conflicts.
-
-License
-
-This project is licensed under the MIT License.
+- **Author**: Sayan Bhattacharya
+- **Email**: [sayanpm17@gmail.com](mailto:sayanpm17@gmail.com)
+- **LinkedIn**: [linkedin.com/in/snbhattacharya5](https://www.linkedin.com/in/snbhattacharya5/)
